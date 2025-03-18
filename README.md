@@ -24,16 +24,17 @@ Tairy Greene Text (TGT) is a Python script that colorizes text in your terminal.
 ```
 Arguments:
 
- TEXT or <script>]: The text to colorize, or a script to run with colorized output (without -TGTify). If no text/script and no piped input, displays this help.
--theme THEME: Specify a color theme. If omitted, a random theme is used.
--all: Show examples of all available themes.
--install: Install the script to /usr/local/bin/tgt.
--uninstall: Uninstall the script.
--v, --version: Display version information.
--TGTify <script>: Execute a script and colorize its standard output and standard error. (Note: This feature may have limited functionality in the current version.)
--infect <script> -theme <theme>: Install a theme permanently into a Python script by modifying its source code. Use with extreme caution and back up your script before using this option! (Note: This feature may have limited functionality in the current version.)
--disinfect <script>: Attempt to remove TGT colorization from a Python script that was previously modified with -infect. Use with extreme caution and back up your script!
--h, --help: Show this help message and exit.
+* TEXT or <script>]: The text to colorize, or a script to run with colorized output (without -TGTify). If no text/script and no piped input, displays this help.
+* -theme THEME: Specify a color theme. If omitted, a random theme is used.
+* -all: Show examples of all available themes.
+* -install: Install the script to /usr/local/bin/tgt.
+* -uninstall: Uninstall the script.
+* -v, --version: Display version information.
+* -TGTify <script>: Execute a script and colorize its standard output and standard error. (Note: This feature may have limited functionality in the current version.)
+* -infect <script> -theme <theme>: Install a theme permanently into a Python script by modifying its source code. Use with extreme caution and back up your script before using this 
+   option! (Note: This feature may have limited functionality in the current version.)
+* -disinfect <script>: Attempt to remove TGT colorization from a Python script that was previously modified with -infect. Use with extreme caution and back up your script!
+* -h, --help: Show this help message and exit.
 ```bash
 ./TGT.py -theme "Tairy Greene" "Hello World"
 echo "This is piped" | ./TGT.py -theme "ocean"
@@ -145,8 +146,6 @@ The -infect and -TGTify features are currently in an experimental state.  While 
 *   **Consistent Terminology and Style:**  Used consistent terminology throughout (e.g., "script" instead of sometimes "script file").
 *   **Removed Redundancy:** Removed the extra spaces in your original input, which are not needed in Markdown.
 * Added help command to the argument list
-
-This revised version provides a clear, well-formatted, and user-friendly help section suitable for inclusion in a GitHub README.
 
 
 ## License
