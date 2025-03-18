@@ -5,9 +5,9 @@ clear
 
 script_name="TGT"
 install_path="/usr/local/bin/$script_name"
-github_repo_url="https://github.com/sworrl/TairyGreeneText/blob/main/TGT.sh" # Updated GitHub raw URL
-script_version="1.0"
-script_codename="Spaghett!"
+github_repo_url="https://raw.githubusercontent.com/sworrl/TairyGreeneText/main/TGT.sh" # Corrected GitHub raw URL
+script_version="1.3" # Incremented version
+script_codename="For Your Health!" # New Tim and Eric themed codename
 
 is_steamos() {
   if [[ -f "/etc/os-release" ]]; then
@@ -304,6 +304,12 @@ update() {
 
   if [[ $? -ne 0 ]]; then
     echo "Error: Failed to download the latest version." >&2
+    return 1
+  fi
+
+  # Check if the downloaded content looks like HTML (a basic check for '<')
+  if [[ "$latest_version_content" == *"<"* ]]; then
+    echo "Error: Received HTML content instead of the script. Please try again later." >&2
     return 1
   fi
 
