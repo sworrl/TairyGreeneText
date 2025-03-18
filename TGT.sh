@@ -6,8 +6,8 @@ clear
 script_name="TGT"
 install_path="/usr/local/bin/$script_name"
 github_repo_url="https://raw.githubusercontent.com/sworrl/TairyGreeneText/main/TGT.sh" # Corrected GitHub raw URL
-script_version="1.3" # Incremented version
-script_codename="For Your Health!" # New Tim and Eric themed codename
+script_version="1.5" # Updated version
+script_codename="Spaghetti and Meatballs!" # New Tim and Eric themed codename
 
 is_steamos() {
   if [[ -f "/etc/os-release" ]]; then
@@ -287,6 +287,32 @@ uninstall() {
   fi
 }
 
+# Function to compare version numbers (e.g., "1.2" vs "1.10")
+version_greater() {
+  local v1="$1"
+  local v2="$2"
+  local IFS='.'
+  local -a parts1 parts2
+  read -ra parts1 <<<"$v1"
+  read -ra parts2 <<<"$v2"
+
+  local len1=${#parts1[@]}
+  local len2=${#parts2[@]}
+  local max_len=$((len1 > len2 ? len1 : len2))
+
+  for ((i=0; i<max_len; i++)); do
+    local p1=${parts1[$i]:-0} # Default to 0 if part doesn't exist
+    local p2=${parts2[$i]:-0}
+
+    if [[ "$p1" -gt "$p2" ]]; then
+      return 0 # v1 is greater
+    elif [[ "$p1" -lt "$p2" ]]; then
+      return 1 # v2 is greater
+    fi
+  done
+  return 1 # Versions are equal or v2 is not greater
+}
+
 update() {
   echo "Checking for updates for $script_name..."
   if ! command -v curl &> /dev/null; then
@@ -307,18 +333,25 @@ update() {
     return 1
   fi
 
-  # Check if the downloaded content looks like HTML (a basic check for '<')
-  if [[ "$latest_version_content" == *"<"* ]]; then
-    echo "Error: Received HTML content instead of the script. Please try again later." >&2
+  # Check if the downloaded content looks like HTML
+  if [[ "$latest_version_content" == *"<html"* ]] || [[ "$latest_version_content" == *"<!DOCTYPE html"* ]]; then
+    echo "Error: Received HTML content instead of the script. Please double-check the URL or try again later." >&2
     return 1
   fi
 
-  local current_version_content=$(cat "$install_path")
+  # Extract the version from the latest content
+  local latest_version=$(grep '^script_version="' <<< "$latest_version_content" | sed -E 's/^script_version="(.*)"/\1/')
 
-  if [[ "$latest_version_content" == "$current_version_content" ]]; then
-    echo "$script_name is already up to date."
-  else
-    echo "A new version is available. Do you want to update? (y/N)"
+  if [[ -z "$latest_version" ]]; then
+    echo "Error: Could not determine the latest version from the downloaded content." >&2
+    return 1
+  fi
+
+  echo "Current version: $script_version"
+  echo "Latest version available: $latest_version"
+
+  if version_greater "$latest_version" "$script_version"; then
+    echo "A newer version is available. Do you want to update? (y/N)"
     read -n 1 -r
     echo
     if [[ "$REPLY" =~ ^[Yy]$ ]]; then
@@ -336,6 +369,8 @@ update() {
         echo "Could not unlock the read-only filesystem. Update failed."
       fi
     fi
+  else
+    echo "$script_name is already up to date or the downloaded version is older."
   fi
 }
 
