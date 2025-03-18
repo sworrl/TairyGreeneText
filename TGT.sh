@@ -5,7 +5,9 @@ clear
 
 script_name="TGT"
 install_path="/usr/local/bin/$script_name"
-github_repo_url="YOUR_GITHUB_RAW_URL_HERE" # Placeholder for the GitHub raw URL
+github_repo_url="https://github.com/sworrl/TairyGreeneText/blob/main/TGT.sh" # Updated GitHub raw URL
+script_version="1.0"
+script_codename="Spaghett!"
 
 is_steamos() {
   if [[ -f "/etc/os-release" ]]; then
@@ -297,18 +299,18 @@ update() {
     return 1
   fi
 
-  local latest_version_path="/tmp/${script_name}_latest"
-  curl -s "$github_repo_url" -o "$latest_version_path"
+  # Use curl to get the raw content of the file
+  local latest_version_content=$(curl -s "$github_repo_url")
 
   if [[ $? -ne 0 ]]; then
     echo "Error: Failed to download the latest version." >&2
-    rm -f "$latest_version_path"
     return 1
   fi
 
-  if cmp -s "$install_path" "$latest_version_path"; then
+  local current_version_content=$(cat "$install_path")
+
+  if [[ "$latest_version_content" == "$current_version_content" ]]; then
     echo "$script_name is already up to date."
-    rm -f "$latest_version_path"
   else
     echo "A new version is available. Do you want to update? (y/N)"
     read -n 1 -r
@@ -316,7 +318,7 @@ update() {
     if [[ "$REPLY" =~ ^[Yy]$ ]]; then
       if unlock_readonly; then
         echo "Updating $script_name..."
-        sudo cp "$latest_version_path" "$install_path"
+        echo "$latest_version_content" | sudo tee "$install_path" > /dev/null
         local update_result=$?
         if [[ "$update_result" -ne 0 ]]; then
           echo "Error: Failed to update the script. Please try again with sudo." >&2
@@ -328,7 +330,6 @@ update() {
         echo "Could not unlock the read-only filesystem. Update failed."
       fi
     fi
-    rm -f "$latest_version_path"
   fi
 }
 
@@ -349,6 +350,7 @@ show_help() {
   TGT "**************************************************" "$banner_theme"
   TGT "* *" "$banner_theme"
   TGT "* TGT (TAIRY GREENE TEXT)             *" "$banner_theme"
+  TGT "* Version: $script_version ($script_codename)   *" "$banner_theme"
   TGT "* BROUGHT TO YOU BY: JUSTIN @ FALCONTECHNIX   *" "$banner_theme"
   TGT "* AND GEMINI!                  *" "$banner_theme"
   TGT "* *" "$banner_theme"
