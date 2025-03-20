@@ -1,4 +1,8 @@
-Tairy Greene Text (TGT) - v2.0 "Maximum Yelling!"
+# Tairy Greene Text (TGT) - v2.0 *"Maximum Yelling!"*
+
+[![Version](https://img.shields.io/badge/Version-v2.0-blue.svg)](https://github.com/sworrl/TairyGreeneText/releases/tag/v2.0)
+
+[![CODENAME](https://img.shields.io/badge/CODENAME-MAXIMUM_YELLING!-pink.svg)](https://github.com/sworrl/TairyGreeneText/releases/tag/v2.0)
 
 Tairy Greene Text (TGT) is a Python script that colorizes text in your terminal. It offers a wide variety of themes, including colors inspired by Tim and Eric, US states, and various other fun and vibrant palettes. It can colorize text provided as arguments, piped input, or even the output of other scripts! It also has the ability to "infect" other Python scripts with TGT's colorization.
 ## Features
@@ -150,8 +154,21 @@ The -infect and -TGTify features are currently in an experimental state.  While 
 
 ## License
 
-Creative Commons Attribution-ShareAlike 4.0 International License. (https://creativecommons.org/licenses/by-sa/4.0/)
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License version 3.0 as published by
+the Free Software Foundation, either version 3.0 of the License, or
+(at your option) any later version.
 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License version 3.0 for more details.
+
+The full text of the GPL 3.0 is available at [https://www.gnu.org/licenses/gpl-3.0.html](https://www.gnu.org/licenses/gpl-3.0.html).
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 ## Brought to you by:
 
 **JUSTIN from the land of FALCONTECHNIX**
